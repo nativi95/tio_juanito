@@ -38,7 +38,7 @@ public class UsuarioBean {
         this.clave = clave;
     }
 
-    public boolean isRol() {
+    public boolean getRol() {
         return rol;
     }
 

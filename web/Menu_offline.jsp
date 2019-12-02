@@ -61,7 +61,7 @@
         <div class="col-4">
             <ul class="nav menu ">
                 <li class="nav-item" style="right: 50px">
-                    <a class="nav-link" style="color: #fff;" href="#">Login</a>
+                    <a class="nav-link" style="color: #fff;" href="login.jsp">Login</a>
                 </li>
                 <li class="nav-item" style="right: 50px">
                     <a class="nav-link" style="color: #fff;" href="#">Regístrate</a>

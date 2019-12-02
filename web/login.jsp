@@ -10,12 +10,13 @@
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href=".../css/bootstrap.min.css" rel="stylesheet">
-        <link href=".../css/style_1.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/style_1.css" rel="stylesheet">
     </head>
    
     <body style="background-color: #424242">
-        <div style="background-image: url('.../imagenes/menu3.jpg');"><jsp:include file="../Menu_offline.jsp" flush="true" />
+       <%@ include file="/Menu_offline.jsp"%>
+        <br>
         <br>
         <div class="container" >
             
@@ -26,27 +27,28 @@
                 </div>
                 <div class="col-md-4" style="background-color:#dbeddc; border-radius: 15px;">
                     <br>
-                    <form role="form">
+                    <form method="POST" action="login?action=login" role="form">
                         <div class="form-group">
 
                             <label for="exampleInputEmail1">
                                 Usuario o correo electrónico
                             </label>
-                            <input type="email" class="form-control" id="exampleInputEmail1">
+                            <input name="registro" class="form-control" id="exampleInputEmail1">
                         </div>
                         <div class="form-group">
 
                             <label for="exampleInputPassword1">
                                 Clave
                             </label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <input type="password" name="clave" class="form-control" id="exampleInputPassword1">
                         </div>
 
 
                         <button type="submit" class="btn btn-success">
-                            Submit
+                            Iniciar sesión
                         </button>
                     </form>
+                    <b> ${msg}</b>
                     <br>
                 </div>
             </div>
