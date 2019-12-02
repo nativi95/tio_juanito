@@ -5,6 +5,22 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    HttpSession sesion = request.getSession();
+    String Id_usuario;
+    String Correo;
+
+    if (sesion.getAttribute("Id_usuario") != null) {
+       
+        Id_usuario = sesion.getAttribute("Id_usuario").toString();
+    } else {
+        if (sesion.getAttribute("Correo") != null) {
+            Correo = sesion.getAttribute("Correo").toString();
+        } else {
+            response.sendRedirect("login.jsp");
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +28,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%@ include file="/Inicio.jsp"%>
     </body>
 </html>

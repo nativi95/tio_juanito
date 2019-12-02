@@ -5,6 +5,24 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+
+
+<%
+    HttpSession sesion = request.getSession();
+    String Id_usuario;
+    String Correo;
+
+    if (sesion.getAttribute("Id_usuario") != null) {
+        Id_usuario = sesion.getAttribute("Id_usuario").toString();
+    } else {
+        if (sesion.getAttribute("Correo") != null) {
+            Correo = sesion.getAttribute("Correo").toString();
+        } else {
+            response.sendRedirect("login.jsp");
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>

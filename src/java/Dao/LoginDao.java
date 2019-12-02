@@ -23,13 +23,17 @@ public class LoginDao {
         String sql = "select * from usuarios where id_usuario=?";
 
         try {
+            ps=conn.conectar().prepareStatement(sql);
             ps.setString(1, usuario.getId_usuario());
+            
             rs = ps.executeQuery();
             while (rs.next()) {
                 return true;
             }
+            
             return false;
         } catch (Exception e) {
+            System.out.println(ps+" "+e);
             return false;
         }
     }
@@ -38,13 +42,16 @@ public class LoginDao {
         String sql = "select * from usuarios where correo=?";
 
         try {
+            ps=conn.conectar().prepareStatement(sql);
             ps.setString(1, correo.getCorreo());
             rs = ps.executeQuery();
             while (rs.next()) {
                 return true;
             }
+           
             return false;
         } catch (Exception e) {
+            
             return false;
         }
     }
@@ -54,6 +61,7 @@ public class LoginDao {
         String sql = "select rol from usuarios where correo=?";
 
         try {
+            ps=conn.conectar().prepareStatement(sql);
             ps.setString(1, correo.getCorreo());
             rs = ps.executeQuery();
 
@@ -61,8 +69,10 @@ public class LoginDao {
                 rol = new UsuarioBean();
                 rol.setRol(rs.getBoolean(1));
             }
+           
             return rol;
         } catch (Exception e) {
+          
             return null;
         }
     }
@@ -71,6 +81,7 @@ public class LoginDao {
         String sql = "select rol from usuarios where id_usuario=?";
 
         try {
+            ps=conn.conectar().prepareStatement(sql);
             ps.setString(1, usuario.getCorreo());
             rs = ps.executeQuery();
 
@@ -78,8 +89,10 @@ public class LoginDao {
                 rol = new UsuarioBean();
                 rol.setRol(rs.getBoolean(1));
             }
+            
             return rol;
         } catch (Exception e) {
+            
             return null;
         }
     }
@@ -117,13 +130,18 @@ public class LoginDao {
         String sql = "select * from usuarios where correo=? and  clave=?";
 
         try {
-            ps.setString(1, encriptador(clave.getClave()));
+            ps=conn.conectar().prepareStatement(sql);
+             ps.setString(1, clave.getCorreo());
+            ps.setString(2, encriptador(clave.getClave()));
+            System.out.println(ps+" ");
             rs = ps.executeQuery();
             while (rs.next()) {
+                
                 return true;
             }
             return false;
         } catch (Exception e) {
+         
             return false;
         }
 
@@ -133,16 +151,36 @@ public class LoginDao {
         String sql = "select * from usuarios where id_usuario=? and  clave=?";
 
         try {
-            ps.setString(1, encriptador(clave.getClave()));
+            ps=conn.conectar().prepareStatement(sql);
+            ps.setString(1, clave.getId_usuario());
+            ps.setString(2, encriptador(clave.getClave()));
+            System.out.println(ps+" ");
             rs = ps.executeQuery();
             while (rs.next()) {
+               
                 return true;
             }
             return false;
         } catch (Exception e) {
+            
             return false;
         }
 
+    }
+    
+    public boolean agregarUsuario(UsuarioBean usuario){
+    String sql="insert into usuarios values(?,?,?,0)";
+        try {
+            ps=conn.conectar().prepareStatement(sql);
+            ps.setString(1,usuario.getId_usuario());
+            ps.setString(2, usuario.getCorreo());
+            ps.setString(3, encriptador(usuario.getClave()));
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(ps+" "+e);
+            return false;
+        }
     }
 
 }

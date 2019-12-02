@@ -47,15 +47,24 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String registro = request.getParameter("registro");
         String clave = request.getParameter("clave");
-
+       
         Conexion conn = new Conexion();
         LoginDao login = new LoginDao(conn);
         UsuarioBean usuario = new UsuarioBean(registro);
+       
         usuario.setCorreo(registro);
         usuario.setClave(clave);
+        
+        
+         
+       
+        
         boolean user = login.consultarUsuario(usuario);
+        System.out.println(user+"");
+       
         boolean correo = login.consultarCorreo(usuario);
-        boolean cla;
+        System.out.println(correo+"");
+       
         if (user) {
             if (login.consultarClave_usuario(usuario)) {
 
