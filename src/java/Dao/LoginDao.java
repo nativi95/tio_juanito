@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import modelo.ApoderadosBean;
 import modelo.UsuarioBean;
 
 public class LoginDao {
@@ -20,11 +21,11 @@ public class LoginDao {
     PreparedStatement ps;
 
     public boolean consultarUsuario(UsuarioBean usuario) {
-        String sql = "select * from usuarios where id_usuario=?";
+        String sql = "select * from usuarios where usuario=?";
 
         try {
             ps=conn.conectar().prepareStatement(sql);
-            ps.setString(1, usuario.getId_usuario());
+            ps.setString(1, usuario.getUsuario());
             
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -78,11 +79,11 @@ public class LoginDao {
     }
     
     public UsuarioBean consultarRol_usuario(UsuarioBean usuario) {
-        String sql = "select rol from usuarios where id_usuario=?";
+        String sql = "select rol from usuarios where usuario=?";
 
         try {
             ps=conn.conectar().prepareStatement(sql);
-            ps.setString(1, usuario.getCorreo());
+            ps.setString(1, usuario.getUsuario());
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -148,11 +149,11 @@ public class LoginDao {
     }
 
     public boolean consultarClave_usuario(UsuarioBean clave) {
-        String sql = "select * from usuarios where id_usuario=? and  clave=?";
+        String sql = "select * from usuarios where usuario=? and  clave=?";
 
         try {
             ps=conn.conectar().prepareStatement(sql);
-            ps.setString(1, clave.getId_usuario());
+            ps.setString(1, clave.getUsuario());
             ps.setString(2, encriptador(clave.getClave()));
             System.out.println(ps+" ");
             rs = ps.executeQuery();
@@ -169,16 +170,65 @@ public class LoginDao {
     }
     
     public boolean agregarUsuario(UsuarioBean usuario){
-    String sql="insert into usuarios values(?,?,?,0)";
+    String sql="insert into usuarios values(?,?,?,?,0)";
         try {
             ps=conn.conectar().prepareStatement(sql);
-            ps.setString(1,usuario.getId_usuario());
-            ps.setString(2, usuario.getCorreo());
-            ps.setString(3, encriptador(usuario.getClave()));
+            ps.setInt(1, usuario.getId_usuario());
+            ps.setString(2,usuario.getUsuario());
+            ps.setString(3, usuario.getCorreo());
+            ps.setString(4, encriptador(usuario.getClave()));
             ps.executeUpdate();
             return true;
         } catch (Exception e) {
             System.out.println(ps+" "+e);
+            return false;
+        }
+    }
+    
+    public boolean agregarApoderado(ApoderadosBean apoderado){
+    String sql="insert into apoderados values(?,?,?,?,?,?, null)";
+    
+        try {
+            ps=conn.conectar().prepareStatement(sql);
+            ps.setInt(1, apoderado.getId_apoderado());
+            ps.setString(2, apoderado.getNombre());
+            ps.setString(3, apoderado.getApellido());
+            ps.setString(4, apoderado.getDui());
+            ps.setString(5, apoderado.getTelefono());
+            ps.setInt(6, apoderado.getId_usuario().getId_usuario());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(ps+" "+e);
+            return false;
+        }
+    }
+    
+    public UsuarioBean ultimo(){
+    String sql="select max(id_usuario) from usuarios";
+    
+        try {
+            ps=conn.conectar().prepareStatement(sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+            rol=new UsuarioBean(rs.getInt(1));
+            }
+        } catch (Exception e) {
+            System.out.println(ps+" "+e);
+        }
+    return rol;
+    }
+    
+    public boolean eliminarUsuario(UsuarioBean id){
+    
+        String sql="delete from usuarios where id:usuario=?";
+                try {
+                    ps=conn.conectar().prepareStatement(sql);
+                    ps.setInt(1, id.getId_usuario());
+                    ps.executeUpdate();
+                    return true;
+        } catch (Exception e) {
+                    System.out.println(ps+" "+e);
             return false;
         }
     }

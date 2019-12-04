@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.ApoderadosBean;
 import modelo.UsuarioBean;
 
 /**
@@ -38,6 +39,9 @@ public class LoginServlet extends HttpServlet {
             case "login":
                 login(request, response);
                 break;
+            case "registrar":
+                registrar(request, response);
+                break;
             default:
                 throw new AssertionError();
         }
@@ -47,34 +51,28 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String registro = request.getParameter("registro");
         String clave = request.getParameter("clave");
-       
+
         Conexion conn = new Conexion();
         LoginDao login = new LoginDao(conn);
-        UsuarioBean usuario = new UsuarioBean(registro);
-       
+        UsuarioBean usuario = new UsuarioBean();
+        usuario.setUsuario(registro);
         usuario.setCorreo(registro);
         usuario.setClave(clave);
-        
-        
-         
-       
-        
+
         boolean user = login.consultarUsuario(usuario);
-        System.out.println(user+"");
-       
+
         boolean correo = login.consultarCorreo(usuario);
-        System.out.println(correo+"");
-       
+
         if (user) {
             if (login.consultarClave_usuario(usuario)) {
 
                 if (login.consultarRol_usuario(usuario).getRol()) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("Id_usuario", usuario.getId_usuario());
+                    session.setAttribute("usuario", usuario.getUsuario());
                     response.sendRedirect("admin.jsp");
                 } else {
                     HttpSession session = request.getSession();
-                    session.setAttribute("Id_usuario", usuario.getId_usuario());
+                    session.setAttribute("usuario", usuario.getUsuario());
                     response.sendRedirect("cliente.jsp");
                 }
             } else {
@@ -110,6 +108,73 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("msg", msg);
                 RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                 rd.forward(request, response);
+            }
+        }
+    }
+
+    protected void registrar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        System.out.println("llegue hasta aqui");
+        String usuarior = request.getParameter("usuario");
+        String correor = request.getParameter("correo");
+        String clave = request.getParameter("clave");
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String dui = request.getParameter("dui");
+        String telefono = request.getParameter("telefono");
+
+        Conexion conn = new Conexion();
+        LoginDao login = new LoginDao(conn);
+        UsuarioBean usuario = new UsuarioBean(0);
+        usuario.setUsuario(usuarior);
+        usuario.setCorreo(correor);
+        usuario.setClave(clave);
+
+        boolean user = login.consultarUsuario(usuario);
+
+        boolean correo = login.consultarCorreo(usuario);
+
+        if (user) {
+
+            request.setAttribute("msg", "Ya existe cuenta con este usuario");
+            RequestDispatcher rd = request.getRequestDispatcher("registrate.jsp");
+            rd.forward(request, response);
+        } else {
+            if (correo) {
+
+                request.setAttribute("msg", "Ya existe cuenta con este correo");
+                RequestDispatcher rd = request.getRequestDispatcher("registrate.jsp");
+                rd.forward(request, response);
+
+            } else {
+
+                if (login.agregarUsuario(usuario)) {
+
+                    ApoderadosBean apoderado = new ApoderadosBean(0);
+                    apoderado.setApellido(apellido);
+                    apoderado.setDui(dui);
+                    apoderado.setNombre(nombre);
+                    apoderado.setTelefono(telefono);
+                    apoderado.setId_usuario(login.ultimo());
+                    if (login.agregarApoderado(apoderado)) {
+
+                        request.setAttribute("msg", "Registrado Exitosamente");
+                        RequestDispatcher rd = request.getRequestDispatcher("registrate.jsp");
+                        rd.forward(request, response);
+
+                    } else {
+                        login.eliminarUsuario(login.ultimo());
+                        request.setAttribute("msg", "No fue posible llenar el formulario");
+                        RequestDispatcher rd = request.getRequestDispatcher("registrate.jsp");
+                        rd.forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("msg", "No fue posible llenar el formulario");
+                    RequestDispatcher rd = request.getRequestDispatcher("registrate.jsp");
+                    rd.forward(request, response);
+                }
+
             }
         }
     }

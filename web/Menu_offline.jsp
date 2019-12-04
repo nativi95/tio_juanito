@@ -45,10 +45,10 @@
         <div class="col-8">
             <ul class="nav menu ">
                 <li class="nav-item ">
-                    <a class="nav-link active" href="Inicio.jsp" style="color: #fff;" href="#">Tio Juanito</a>
+                    <a class="nav-link active" href="Inicio.jsp" style="color: #fff;">Tio Juanito</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #fff;" href="#">Rutas</a>
+                    <a class="nav-link" style="color: #fff;" href="recorridos?action=barrios">Distritos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="color: #fff;" href="#">Colegios</a>
@@ -64,7 +64,7 @@
                     <a class="nav-link" style="color: #fff;" href="login.jsp">Login</a>
                 </li>
                 <li class="nav-item" style="right: 50px">
-                    <a class="nav-link" style="color: #fff; background: none; border: none;"  data-toggle="modal" data-target="#exampleModal">Regístrate</a>
+                   <a class="nav-link" style="color: #fff;" href="registrate.jsp">Regístrate</a>
                 </li>
             </ul>
         </div>

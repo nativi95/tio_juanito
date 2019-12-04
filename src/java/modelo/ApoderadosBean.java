@@ -7,7 +7,7 @@ public class ApoderadosBean {
     private String apellido;
     private String dui;
     private String telefono;
-    private String id_usuario;
+    private UsuarioBean id_usuario;
     private int id_contrato;
 
     public ApoderadosBean(int id_apoderado) {
@@ -57,11 +57,11 @@ public class ApoderadosBean {
         this.telefono = telefono;
     }
 
-    public String getId_usuario() {
+    public UsuarioBean getId_usuario() {
         return id_usuario;
     }
 
-    public void setId_usuario(String id_usuario) {
+    public void setId_usuario(UsuarioBean id_usuario) {
         this.id_usuario = id_usuario;
     }
 
