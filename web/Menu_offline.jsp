@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
 <style >
 
 
@@ -27,7 +29,7 @@
         opacity: 0.80;
         height: 3.5rem;
         width: 80%;
-
+     
 
     }
 
@@ -40,7 +42,7 @@
 
 
 <div class="contenedor col-12" style=" ">
-
+   
     <div class="row">
         <div class="col-8">
             <ul class="nav menu ">
@@ -51,7 +53,7 @@
                     <a class="nav-link" style="color: #fff;" href="recorridos?action=barrios">Distritos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #fff;" href="#">Colegios</a>
+                    <a class="nav-link" style="color: #fff;" href="recorridos?action=mostrarColegios">Colegios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="color: #fff;" href="#">Contáctanos</a>
@@ -64,13 +66,13 @@
                     <a class="nav-link" style="color: #fff;" href="login.jsp">Login</a>
                 </li>
                 <li class="nav-item" style="right: 50px">
-                   <a class="nav-link" style="color: #fff;" href="registrate.jsp">Regístrate</a>
+                    <a class="nav-link" style="color: #fff;" href="registrate.jsp">Regístrate</a>
                 </li>
             </ul>
         </div>
     </div>
 
-    
+
 </div>
 
 

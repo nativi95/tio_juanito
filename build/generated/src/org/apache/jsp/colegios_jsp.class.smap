@@ -1,0 +1,23 @@
+SMAP
+colegios_jsp.java
+JSP
+*S JSP
+*F
++ 0 colegios.jsp
+colegios.jsp
++ 1 Menu_offline.jsp
+Menu_offline.jsp
+*L
+5,16:59
+1#1,80:75
+20#0,8:154
+27:192,11
+28:203
+29:204,3
+30:207
+31:208,3
+32,2:211
+34,2:213,3
+36,3:219
+38,11:164
+*E

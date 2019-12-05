@@ -1,63 +1,95 @@
-
 package Dao;
 
 import conexion.Conexion;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import modelo.BarriosBean;
 import modelo.ColegiosBean;
-
 
 public class RecorridosDao {
     
     PreparedStatement ps;
     ResultSet rs;
-    private Conexion conn= new Conexion();
-
+    private Conexion conn = new Conexion();
+    
     public RecorridosDao(Conexion conn) {
-    this.conn=conn;
+        this.conn = conn;
     }
     
-   
-    
-    public List<BarriosBean> mostrarBarrios(){
-     List<BarriosBean> list=new LinkedList<>();
-        String sql="select * from barrios";
+    public List<BarriosBean> mostrarBarrios() {
+        List<BarriosBean> list = new LinkedList<>();
+        String sql = "select * from barrios";
         try {
-            ps=conn.conectar().prepareStatement(sql);
-            rs=ps.executeQuery();
-            while(rs.next()){
-            BarriosBean barrios=new BarriosBean(rs.getInt(1));
-            barrios.setNombre(rs.getString(2));
-            list.add(barrios);
+            ps = conn.conectar().prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                BarriosBean barrios = new BarriosBean(rs.getInt(1));
+                barrios.setNombre(rs.getString(2));
+                list.add(barrios);
             }
             
         } catch (Exception e) {
-            System.out.println(ps+"");
+            System.out.println(ps + "");
         }
         
-    return list;
+        return list;
     }
-     public List<ColegiosBean> mostrarColegios(){
-     List<ColegiosBean> list=new LinkedList<>();
-        String sql="select * from barrios";
+    
+    public List<ColegiosBean> mostrarColegios() {
+        List<ColegiosBean> list = new LinkedList<>();
+        String sql = "select * from colegios";
         try {
-            ps=conn.conectar().prepareStatement(sql);
-            rs=ps.executeQuery();
-            while(rs.next()){
-            ColegiosBean colegios=new ColegiosBean(rs.getInt(1));
-            colegios.setNombre(rs.getString(2));
-            list.add(colegios);
+            ps = conn.conectar().prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ColegiosBean colegios = new ColegiosBean(rs.getInt(1));
+                colegios.setNombre(rs.getString(2));
+                colegios.setDirecion(rs.getString(3));
+                colegios.setFoto(rs.getBinaryStream(4));
+                list.add(colegios);
             }
             
         } catch (Exception e) {
-            System.out.println(ps+"");
+            System.out.println(ps + "");
         }
         
-    return list;
+        return list;
     }
     
+    public void listarImg(int id, HttpServletResponse response) {
+        String sql = "select * from persona where id=" + id;
+
+        //para poder manejar imagenes
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        BufferedInputStream bufferedInputStream = null;
+        BufferedOutputStream bufferedOutputStream = null;
+        response.setContentType("image/*");
+        try {
+            outputStream = response.getOutputStream();
+            ps = conn.conectar().prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                inputStream = rs.getBinaryStream("foto");
+            }
+            //se inicializa las variables de arriba
+            
+            bufferedInputStream = new BufferedInputStream(inputStream);
+            bufferedOutputStream = new BufferedOutputStream(outputStream);
+            int i = 0;
+            while ((i = bufferedInputStream.read()) != -1) {
+                bufferedOutputStream.write(i);
+            }
+            
+        } catch (Exception e) {
+        }
+    }
     
 }

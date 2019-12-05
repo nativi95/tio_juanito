@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.BarriosBean;
+import modelo.ColegiosBean;
 
 /**
  *
@@ -22,47 +23,66 @@ import modelo.BarriosBean;
  */
 public class RecorridosServlet extends HttpServlet {
 
- 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        String action=request.getParameter("action");
-        switch(action){
-            
-        case "barrios": mostrarBarrios(request,response); break;
-                
+
+        String action = request.getParameter("action");
+        switch (action) {
+
+            case "barrios":
+                mostrarBarrios(request, response);
+                break;
+            case "mostrarColegios":
+                mostrarColegios(request, response);
+                break;
+
         }
-        
-    }
-    
-    protected void mostrarBarrios(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       
-       Conexion conn= new Conexion();
-       RecorridosDao barriosd= new RecorridosDao(conn);
-        
-        List<BarriosBean> lista= barriosd.mostrarBarrios();
-        request.setAttribute("lista", lista);
-                RequestDispatcher rd = request.getRequestDispatcher("distritos.jsp");
-                rd.forward(request, response);
-        
+
     }
 
-   
+    protected void mostrarBarrios(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        Conexion conn = new Conexion();
+        RecorridosDao barriosd = new RecorridosDao(conn);
+
+        List<BarriosBean> lista = barriosd.mostrarBarrios();
+        request.setAttribute("lista", lista);
+        RequestDispatcher rd = request.getRequestDispatcher("distritos.jsp");
+        rd.forward(request, response);
+
+    }
+
+    protected void mostrarColegios(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        Conexion conn = new Conexion();
+        RecorridosDao recorridosd = new RecorridosDao(conn);
+
+        List<ColegiosBean> lista = recorridosd.mostrarColegios();
+        request.setAttribute("lista", lista);
+        int rol = Integer.parseInt(request.getParameter("rol"));
+
+        if (rol == 1) {
+             RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
+                rd.forward(request, response);
+        } else {
+            RequestDispatcher rd = request.getRequestDispatcher("colegios.jsp");
+            rd.forward(request, response);
+        }
+
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-   
-  
 
 }

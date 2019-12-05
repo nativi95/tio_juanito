@@ -1,4 +1,5 @@
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
 <style >
 
 
@@ -9,6 +10,7 @@
         font-family: 'Calistoga', cursive;
         background-image: url('imagenes/menu3.jpg');
         height: 400px;
+       
        
 
 
@@ -45,23 +47,31 @@
         <div class="col-8">
             <ul class="nav menu ">
                 <li class="nav-item ">
-                    <a class="nav-link active" href="Inicio.jsp" style="color: #fff;" href="#">Tio Juanito</a>
+                    <a class="nav-link active" href="cliente.jsp" style="color: #fff;">Tio Juanito</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #fff;" href="#">Rutas</a>
+                    <a class="nav-link" style="color: #fff;" href="#">Distritos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #fff;" href="#">Colegios</a>
+                    <a class="nav-link" style="color: #fff;" href="#">Barrios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="color: #fff;" href="#">Contáctanos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #fff;" href="hijos.jsp">hijos</a>
                 </li>
             </ul>
         </div>
         <div class="col-4">
             <ul class="nav menu ">
                 <li class="nav-item" style="right: 50px">
-                    <a class="nav-link" style="color: #fff;" href="login.jsp">Salir</a>
+                    
+                    <a class="nav-link" style="color: #fff;" href="#">ID_usuario</a>
+                </li>
+                <li class="nav-item" style="right: 50px">
+                    
+                    <a class="nav-link" style="color: #fff;" href="login?action=cerrar">Salir</a>
                 </li>
                 
             </ul>

@@ -1,10 +1,14 @@
 package modelo;
 
+import java.io.InputStream;
+
 public class ColegiosBean {
 
     private int id_colegio;
     private String nombre;
     private String direcion;
+    private InputStream foto;
+    
 
     public ColegiosBean(int id_colegio) {
         this.id_colegio = id_colegio;
@@ -35,6 +39,14 @@ public class ColegiosBean {
 
     public void setDirecion(String direcion) {
         this.direcion = direcion;
+    }
+
+    public InputStream getFoto() {
+        return foto;
+    }
+
+    public void setFoto(InputStream foto) {
+        this.foto = foto;
     }
 
 }

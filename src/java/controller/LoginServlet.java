@@ -42,10 +42,15 @@ public class LoginServlet extends HttpServlet {
             case "registrar":
                 registrar(request, response);
                 break;
+            case "cerrar":
+                cerrar(request, response);
+                break;
             default:
                 throw new AssertionError();
         }
     }
+
+    HttpSession session;
 
     protected void login(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -67,11 +72,11 @@ public class LoginServlet extends HttpServlet {
             if (login.consultarClave_usuario(usuario)) {
 
                 if (login.consultarRol_usuario(usuario).getRol()) {
-                    HttpSession session = request.getSession();
+                    session = request.getSession();
                     session.setAttribute("usuario", usuario.getUsuario());
                     response.sendRedirect("admin.jsp");
                 } else {
-                    HttpSession session = request.getSession();
+                    session = request.getSession();
                     session.setAttribute("usuario", usuario.getUsuario());
                     response.sendRedirect("cliente.jsp");
                 }
@@ -86,11 +91,11 @@ public class LoginServlet extends HttpServlet {
             if (correo) {
                 if (login.consultarClave_correo(usuario)) {
                     if (login.consultarRol_Correo(usuario).getRol()) {
-                        HttpSession session = request.getSession();
+                        session = request.getSession();
                         session.setAttribute("Correo", usuario.getCorreo());
                         response.sendRedirect("admin.jsp");
                     } else {
-                        HttpSession session = request.getSession();
+                        session = request.getSession();
                         session.setAttribute("Correo", usuario.getCorreo());
                         response.sendRedirect("cliente.jsp");
                     }
@@ -114,7 +119,7 @@ public class LoginServlet extends HttpServlet {
 
     protected void registrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         System.out.println("llegue hasta aqui");
         String usuarior = request.getParameter("usuario");
         String correor = request.getParameter("correo");
@@ -177,6 +182,15 @@ public class LoginServlet extends HttpServlet {
 
             }
         }
+    }
+
+    protected void cerrar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        session = request.getSession(true);
+        
+        session.invalidate();
+        
+        response.sendRedirect("Inicio.jsp");
     }
 
     @Override
