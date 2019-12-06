@@ -53,7 +53,7 @@
                     <a class="nav-link" style="color: #fff;" href="recorridos?action=barrios">Distritos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #fff;" href="recorridos?action=mostrarColegios">Colegios</a>
+                    <a class="nav-link" style="color: #fff;" href="recorridos?action=mostrarColegios&rol=${0}">Colegios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="color: #fff;" href="#">Contáctanos</a>

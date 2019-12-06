@@ -60,8 +60,9 @@ public class ControllerIMG extends HttpServlet {
             throws ServletException, IOException {
         
         Conexion conn= new Conexion();
-        int id= Integer.parseInt(request.getParameter("id"));
+        int id= Integer.parseInt(request.getParameter("id"));        
         RecorridosDao recd= new RecorridosDao(conn);
+        System.out.println(id);
         recd.listarImg(id, response);
     }
 

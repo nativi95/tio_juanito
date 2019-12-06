@@ -12,10 +12,9 @@
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
-     
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/style_1.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
     </head>
     <%@ include file="/Menu_offline.jsp"%>
     <body style="background-color: #424242">
@@ -26,11 +25,11 @@
             <div class="col-12" style="background-color: #fff; border-radius: 15px;">
                 <c:forEach var="dato" items="${lista}">
                     <div style="padding-top: 10px; padding-bottom: 10px; padding-left: 10px;border-radius: 15px; " class="row">
-                        <div style="border-radius: 15px;"><h3>${dato.getNombre()}</h3></div>
-                        <div class="col-3" style="border-radius: 15px;">
-                           <img src="img?id=${dato.getId_colegio()}" width="150" height="130">
+
+                        <div class="col-2" style="border-radius: 15px; ">
+                            <img src="img?id=${dato.getId_colegio()}" width="150" height="130">
                         </div>
-                        <div class="col-9" style="border-radius: 15px;">
+                        <div class="col-8" style="border-radius: 15px; ">
                             <h4><label style="display: block">${dato.getNombre()}</label></h4>
                             <label style="display: block">${dato.getDirecion()}</label>
                         </div>
@@ -42,6 +41,8 @@
             <br>
         </div>
 
-
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/scripts.js" type="text/javascript"></script>
     </body>
 </html>

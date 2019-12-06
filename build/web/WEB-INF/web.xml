@@ -19,11 +19,15 @@
     <servlet-mapping>
         <servlet-name>RecorridosServlet</servlet-name>
         <url-pattern>/recorridos</url-pattern>
+        
     </servlet-mapping>
+    
+    
     <servlet-mapping>
         <servlet-name>ControllerIMG</servlet-name>
         <url-pattern>/img</url-pattern>
     </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

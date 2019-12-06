@@ -24,8 +24,10 @@
         <meta charset="UTF-8">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-               <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-        
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/scripts.js" type="text/javascript"></script>
     </head>
     <%@ include file="/Menu_admin.jsp"%>
     <body style="background-color: #424242">
@@ -35,45 +37,42 @@
 
 
 
-            <div class="col-12" style="background-color: #fff; border-radius: 15px;">
-                
+            <div class="col-12" style="background-color: #fff;margin-top: 10px; border-radius: 15px;">
+
                 <div><!--prueba modal-->
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        Launch demo modal
-                    </button>
+                    <button style="margin-top: 10px; margin-bottom: 10px;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
+                        Nuevo colegio o escuela
+                    </button> <label style="color:red">${msg2}</label>
 
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Agregar Colegio</h5>
-                                    
-                                    <form method="POST" action="recorridos?action=agregarColegio" enctype="mulipart/form-data">
-                                        
-                                        <label>Nombre</label>
-                                        <input name="nombre">
-                                        
-                                        <label>Nombre</label>
-                                        <input name="apellido">
-                                        
-                                        <input type="text" name="fileFoto">
-                                        
-                                        
+
+
+                                    <form method="POST" action="recorridos?action=agregarColegio" enctype="multipart/form-data" >
+                                        <h5 class="modal-title" id="exampleModalLabel">Agregar Colegio</h5>
+                                        <label style="display: block;">Nombre</label>
+                                        <input style="display: block;" name="nombre">
+
+                                        <label style="display: block;">Direción</label>
+                                        <input style="display: block;" name="direcion">
+
+                                        <label style="display: block;">foto</label>
+                                        <input style="display: block;" type="file" name="fileFoto">
+
+                                      
+                                        <input type="submit" value="Enviar"/>
                                     </form>
-                                    
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <label style="color:red;">
+                                        ${msg}
+                                    </label>
+
                                 </div>
-                                <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -82,27 +81,64 @@
                 </div>
 
                 <c:forEach var="dato" items="${lista}">
-                    <div style="padding-top: 10px; padding-bottom: 10px; padding-left: 10px;border-radius: 15px; " class="row">
-                       
-                        <div class="col-2" style="border-radius: 15px; background-color: red;">
-                            <img src="img?id=${dato.getId_colegio()}" width="150" height="130">
+                    <div style=" border: 1px; padding-bottom: 10px; padding-left: 10px;border-radius: 15px; " class="row">
+
+                        <div style=" margin-bottom: 10px; margin-left: 10px; margin-right: 10px; border-color: #7373FF;" class="col-2" style="border-radius: 15px;">
+                            <img style="border-radius: 15px;"  src="img?id=${dato.getId_colegio()}" width="150" height="130">
                         </div>
-                        <div class="col-8" style="border-radius: 15px; background-color: blue;">
+                        <div class="col-6" style="border-radius: 15px; color:#fff; padding-top: 10px; margin-bottom: 10px; margin-left: 10px; margin-right: 10px; background-color: RGBA(115,115,255,0.47);">
                             <h4><label style="display: block">${dato.getNombre()}</label></h4>
                             <label style="display: block">${dato.getDirecion()}</label>
                         </div>
+                        
+                        
+
+                        <div class="col-3" style="border-radius: 15px; background-color: #ccf2cc; height: 130px;">
+                            <a href="recorridos?action=eliminarColegio&id=${dato.getId_colegio()}" style="display: block; margin-top: 15px; color: #fff" class="btn btn-danger">Eliminar </a>
+                            <a  style="display: block;margin-top:10px; color: #fff" class="btn btn-info" data-toggle="modal" data-target="#actualizarmodal">Actualizar</a>
+
+
+
+
+                        </div>
+
                     </div>
                 </c:forEach>
-            </div>
+                <div class="modal fade" id="actualizarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
 
 
-            <br>
-        </div>
+                                <form method="POST"> <!--action="recorridos?action=actualizarColegio"enctype="multipart/form-data"-->  
+                                      <h5 class="modal-title" id="exampleModalLabel">Actualizar registro de colegio</h5>
+                                    <label style="display: block;">Nombre</label>
+                                    <input style="display: block;" name="nombreU">
+
+                                    <label style="display: block;">Direción</label>
+                                    <input style="display: block;" name="direcionU">
+
+                                    <label style="display: block;">foto</label>
+                                    <input style="display: block;" type="file" name="fileFotoU">
+
+                                  
+                                    <input type="submit" value="Enviar"/>
+                                </form>
+                                <label style="color:red;">
+                                    ${msg3}
+                                </label>
+
+                            </div>
+                        </div>
 
 
-    </body>
-     <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/jquery.min.js" type="text/javascript"></script>
-        <script src="js/scripts.js" type="text/javascript"></script>
-        
-</html>
+                        <br>
+                    </div>
+
+                    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+                    <script src="js/jquery.min.js" type="text/javascript"></script>
+                    <script src="js/scripts.js" type="text/javascript"></script>
+                    </body>
+
+
+                    </html>
