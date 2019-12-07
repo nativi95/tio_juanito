@@ -49,6 +49,11 @@ public class RecorridosServlet extends HttpServlet {
 
                 eliminarColegio(request, response);
                 break;
+                
+                 case "mostrarColegiosById":
+                     System.out.println("llego aqui ");
+                mostrarColegiosById(request, response);
+                break;
 
         }
 
@@ -144,7 +149,7 @@ public class RecorridosServlet extends HttpServlet {
             throws ServletException, IOException {
         Conexion conn = new Conexion();
         RecorridosDao recorridosd = new RecorridosDao(conn);
-         int id = Integer.parseInt(request.getParameter("idU"));
+        int id = Integer.parseInt(request.getParameter("idU"));
         ColegiosBean colegio = new ColegiosBean(id);
         String nombre = request.getParameter("nombreU");
 
@@ -169,6 +174,19 @@ public class RecorridosServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
             rd.forward(request, response);
         }
+    }
+
+    protected void mostrarColegiosById(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Conexion conn= new Conexion();
+        RecorridosDao record= new RecorridosDao(conn);
+        int id=Integer.parseInt((String)request.getParameter("id"));
+        ColegiosBean Id=new ColegiosBean(id);
+        System.out.println("Id de By ID"+Id.getId_colegio());
+        List<ColegiosBean> listaById=record.mostrarColegiosById(Id);
+        request.setAttribute("listById", listaById);
+        RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
+        rd.forward(request, response);
     }
 
     @Override

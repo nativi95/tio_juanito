@@ -62,7 +62,7 @@ public class ControllerIMG extends HttpServlet {
         Conexion conn= new Conexion();
         int id= Integer.parseInt(request.getParameter("id"));        
         RecorridosDao recd= new RecorridosDao(conn);
-        System.out.println(id);
+        
         recd.listarImg(id, response);
     }
 

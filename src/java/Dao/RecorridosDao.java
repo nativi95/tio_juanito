@@ -63,6 +63,27 @@ public class RecorridosDao {
         return list;
     }
 
+    public List<ColegiosBean> mostrarColegiosById(ColegiosBean id) {
+        List<ColegiosBean> list = new LinkedList<>();
+        String sql = "select * from colegios where id_colegio=" + id.getId_colegio();
+        try {
+            ps = conn.conectar().prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ColegiosBean colegios = new ColegiosBean(rs.getInt(1));
+                colegios.setNombre(rs.getString(2));
+                colegios.setDirecion(rs.getString(3));
+                colegios.setFoto(rs.getBinaryStream(4));
+                list.add(colegios);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println(ps + "");
+            return null;
+        }
+
+    }
+
     public boolean insertarColegio(ColegiosBean colegio) {
 
         String sql = "Insert into colegios values(?, ?, ?, ?)";
@@ -79,7 +100,7 @@ public class RecorridosDao {
             return false;
         }
     }
-    
+
     public boolean actualizarColegio(ColegiosBean colegio) {
 
         String sql = "UPDATE colegios set nombre=?, direcion=?, foto=? WHERE id_colegio=?";
@@ -125,6 +146,7 @@ public class RecorridosDao {
             ps = conn.conectar().prepareStatement(sql);
             rs = ps.executeQuery();
             if (rs.next()) {
+
                 inputStream = rs.getBinaryStream("foto");
             }
             //se inicializa las variables de arriba

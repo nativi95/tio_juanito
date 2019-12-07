@@ -1,3 +1,6 @@
+<%@page import="modelo.ColegiosBean"%>
+<%@page import="Dao.RecorridosDao"%>
+<%@page import="conexion.Conexion"%>
 <%
     HttpSession sesion = request.getSession();
     String usuario;
@@ -63,7 +66,7 @@
                                         <label style="display: block;">foto</label>
                                         <input style="display: block;" type="file" name="fileFoto">
 
-                                      
+
                                         <input type="submit" value="Enviar"/>
                                     </form>
                                     <label style="color:red;">
@@ -87,15 +90,15 @@
                             <img style="border-radius: 15px;"  src="img?id=${dato.getId_colegio()}" width="150" height="130">
                         </div>
                         <div class="col-6" style="border-radius: 15px; color:#fff; padding-top: 10px; margin-bottom: 10px; margin-left: 10px; margin-right: 10px; background-color: RGBA(115,115,255,0.47);">
-                            <h4><label style="display: block">${dato.getNombre()}</label></h4>
-                            <label style="display: block">${dato.getDirecion()}</label>
+                            <h4><label id="nombre" style="display: block">${dato.getNombre()}</label></h4>
+                            <label id="direcion" style="display: block">${dato.getDirecion()}</label>
                         </div>
-                        
-                        
+                        <label hidden="true" id="id">${dato.getId_colegio()}</label>
+
 
                         <div class="col-3" style="border-radius: 15px; background-color: #ccf2cc; height: 130px;">
                             <a href="recorridos?action=eliminarColegio&id=${dato.getId_colegio()}" style="display: block; margin-top: 15px; color: #fff" class="btn btn-danger">Eliminar </a>
-                            <a  style="display: block;margin-top:10px; color: #fff" class="btn btn-info" data-toggle="modal" data-target="#actualizarmodal">Actualizar</a>
+                            <a onclick="ById('${dato.getId_colegio()}','${dato.getNombre()}','${dato.getDirecion()}')" style="display: block;margin-top:10px; color: #fff" class="btn btn-info" data-toggle="modal" data-target="#actualizarmodal">Actualizar</a>
 
 
 
@@ -110,18 +113,20 @@
                             <div class="modal-header">
 
 
-                                <form method="POST"> <!--action="recorridos?action=actualizarColegio"enctype="multipart/form-data"-->  
-                                      <h5 class="modal-title" id="exampleModalLabel">Actualizar registro de colegio</h5>
-                                    <label style="display: block;">Nombre</label>
-                                    <input style="display: block;" name="nombreU">
+                                <form method="POST" action="recorridos?action=actualizarColegio"enctype="multipart/form-data">  
+                                    <h5 class="modal-title" id="exampleModalLabel">Actualizar registro de colegio</h5>
+                                   
+                                        <label style="display: block;">Nombre</label>
+                                        <label hidden="true" id="IdM"></label>
+                                        <input style="display: block;" id="nombreM"  name="nombreU">
 
-                                    <label style="display: block;">Direción</label>
-                                    <input style="display: block;" name="direcionU">
+                                        <label style="display: block;" id="direcionM">Direción</label>
+                                        <input style="display: block;"  name="direcionU">
 
-                                    <label style="display: block;">foto</label>
-                                    <input style="display: block;" type="file" name="fileFotoU">
+                                        <label style="display: block;">foto</label>
+                                        <input style="display: block;" type="file" name="fileFotoU">
+                                   
 
-                                  
                                     <input type="submit" value="Enviar"/>
                                 </form>
                                 <label style="color:red;">
@@ -138,6 +143,17 @@
                     <script src="js/bootstrap.min.js" type="text/javascript"></script>
                     <script src="js/jquery.min.js" type="text/javascript"></script>
                     <script src="js/scripts.js" type="text/javascript"></script>
+                    
+                    <script type="text/javascript">
+                        
+                        function ById(id, nombre, direcion){
+                            document.getElementById("IdM").value=id;
+                                    document.getElementById("nombreM").value=nombre;
+                                    document.getElementById("direcionM").value=direcion;
+                            
+                        
+                    </script>
+                    
                     </body>
 
 
