@@ -101,7 +101,7 @@ public class RecorridosDao {
         }
     }
 
-    public boolean actualizarColegio(ColegiosBean colegio) {
+    public boolean actualizarColegioConFoto(ColegiosBean colegio) {
 
         String sql = "UPDATE colegios set nombre=?, direcion=?, foto=? WHERE id_colegio=?";
         try {
@@ -110,6 +110,23 @@ public class RecorridosDao {
             ps.setString(1, colegio.getNombre());
             ps.setString(2, colegio.getDirecion());
             ps.setBlob(3, colegio.getFoto());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(ps + "\n " + e);
+            return false;
+        }
+    }
+    
+    public boolean actualizarColegioSinFoto(ColegiosBean colegio) {
+
+        String sql = "UPDATE colegios set nombre=?, direcion=? WHERE id_colegio=?";
+        try {
+            ps = conn.conectar().prepareStatement(sql);
+            ps.setInt(4, colegio.getId_colegio());
+            ps.setString(1, colegio.getNombre());
+            ps.setString(2, colegio.getDirecion());
+           
             ps.executeUpdate();
             return true;
         } catch (Exception e) {

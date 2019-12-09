@@ -91,14 +91,14 @@
                         </div>
                         <div class="col-6" style="border-radius: 15px; color:#fff; padding-top: 10px; margin-bottom: 10px; margin-left: 10px; margin-right: 10px; background-color: RGBA(115,115,255,0.47);">
                             <h4><label id="nombre" style="display: block">${dato.getNombre()}</label></h4>
-                            <label id="direcion" style="display: block">${dato.getDirecion()}</label>
+                            <label id="direccion" style="display: block">${dato.getDirecion()}</label>
                         </div>
                         <label hidden="true" id="id">${dato.getId_colegio()}</label>
 
 
                         <div class="col-3" style="border-radius: 15px; background-color: #ccf2cc; height: 130px;">
                             <a href="recorridos?action=eliminarColegio&id=${dato.getId_colegio()}" style="display: block; margin-top: 15px; color: #fff" class="btn btn-danger">Eliminar </a>
-                            <a onclick="ById('${dato.getId_colegio()}','${dato.getNombre()}','${dato.getDirecion()}')" style="display: block;margin-top:10px; color: #fff" class="btn btn-info" data-toggle="modal" data-target="#actualizarmodal">Actualizar</a>
+                            <a onclick="ById('${dato.getId_colegio()}', '${dato.getNombre()}', '${dato.getDirecion()}')" style="display: block;margin-top:10px; color: #fff" class="btn btn-info" data-toggle="modal" data-target="#actualizarmodal">Actualizar</a>
 
 
 
@@ -115,17 +115,17 @@
 
                                 <form method="POST" action="recorridos?action=actualizarColegio"enctype="multipart/form-data">  
                                     <h5 class="modal-title" id="exampleModalLabel">Actualizar registro de colegio</h5>
-                                   
-                                        <label style="display: block;">Nombre</label>
-                                        <label hidden="true" id="IdM"></label>
-                                        <input style="display: block;" id="nombreM"  name="nombreU">
 
-                                        <label style="display: block;" id="direcionM">Direción</label>
-                                        <input style="display: block;"  name="direcionU">
+                                    <label style="display: block;">Nombre</label>
+                                    <label hidden="true" id="IdM"></label>
+                                    <input style="display: block;" id="nombreM"  name="nombreU">
 
-                                        <label style="display: block;">foto</label>
-                                        <input style="display: block;" type="file" name="fileFotoU">
-                                   
+                                    <label style="display: block;" >Direción</label>
+                                    <input style="display: block;" id="direcionM" name="direcionU">
+
+                                    <label style="display: block;">foto</label>
+                                    <input style="display: block;" type="file" name="fileFotoU">
+                                    <label id="vacio">vacio</label>
 
                                     <input type="submit" value="Enviar"/>
                                 </form>
@@ -143,17 +143,28 @@
                     <script src="js/bootstrap.min.js" type="text/javascript"></script>
                     <script src="js/jquery.min.js" type="text/javascript"></script>
                     <script src="js/scripts.js" type="text/javascript"></script>
-                    
+
                     <script type="text/javascript">
-                        
-                        function ById(id, nombre, direcion){
-                            document.getElementById("IdM").value=id;
-                                    document.getElementById("nombreM").value=nombre;
-                                    document.getElementById("direcionM").value=direcion;
-                            
-                        
+
+                                function ById(id, nombre, direccion) {
+                                    document.getElementById("IdM").text = id;
+                                    document.getElementById("nombreM").value = nombre;
+                                    document.getElementById("direcionM").value = direccion;
+                                }
+
+                                $("#fileFotoU").change(function () {
+                                    
+                                    if($('#fileFotoU').get(0).files.length === 0){
+                                        
+                                      $("vacio").text("lleno"); 
+                                      
+                                    }else{$("vacio").text("lleno"); }
+                                    
+                                    
+                                });
+
                     </script>
-                    
+
                     </body>
 
 

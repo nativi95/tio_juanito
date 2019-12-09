@@ -49,14 +49,46 @@ public class RecorridosServlet extends HttpServlet {
 
                 eliminarColegio(request, response);
                 break;
-                
-                 case "mostrarColegiosById":
-                     System.out.println("llego aqui ");
-                mostrarColegiosById(request, response);
-                break;
+
+//            case "actualizarColegios":
+//                System.out.println("llego aqui ");
+//                actualizarColegios(request, response);
+//                break;
 
         }
 
+    }
+
+    protected void agregarColegio(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Conexion conn = new Conexion();
+        RecorridosDao recorridosd = new RecorridosDao(conn);
+        ColegiosBean colegio = new ColegiosBean(0);
+        String nombre = request.getParameter("nombre");
+
+        String direcion = request.getParameter("direcion");
+        Part part;
+        part = request.getPart("fileFoto");
+        String prueba=request.getParameter("fileFoto");
+        System.out.println("prueba de la imagen "+prueba);
+        InputStream inputStream;
+        inputStream = part.getInputStream();
+
+        colegio.setNombre(nombre);
+        colegio.setDirecion(direcion);
+        colegio.setFoto(inputStream);
+
+        if (recorridosd.insertarColegio(colegio)) {
+
+            request.getRequestDispatcher("recorridos?action=mostrarColegios&rol=1").forward(request, response);
+
+        } else {
+            String msg = "Formulario no enviado";
+
+            request.setAttribute("msg", msg);
+            RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
+            rd.forward(request, response);
+        }
     }
 
     protected void mostrarBarrios(HttpServletRequest request, HttpServletResponse response)
@@ -94,35 +126,7 @@ public class RecorridosServlet extends HttpServlet {
 
     }
 
-    protected void agregarColegio(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Conexion conn = new Conexion();
-        RecorridosDao recorridosd = new RecorridosDao(conn);
-        ColegiosBean colegio = new ColegiosBean(0);
-        String nombre = request.getParameter("nombre");
-
-        String direcion = request.getParameter("direcion");
-        Part part;
-        part = request.getPart("fileFoto");
-        InputStream inputStream;
-        inputStream = part.getInputStream();
-
-        colegio.setNombre(nombre);
-        colegio.setDirecion(direcion);
-        colegio.setFoto(inputStream);
-
-        if (recorridosd.insertarColegio(colegio)) {
-
-            request.getRequestDispatcher("recorridos?action=mostrarColegios&rol=1").forward(request, response);
-
-        } else {
-            String msg = "Formulario no enviado";
-
-            request.setAttribute("msg", msg);
-            RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
-            rd.forward(request, response);
-        }
-    }
+   
 
     protected void eliminarColegio(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -178,12 +182,12 @@ public class RecorridosServlet extends HttpServlet {
 
     protected void mostrarColegiosById(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Conexion conn= new Conexion();
-        RecorridosDao record= new RecorridosDao(conn);
-        int id=Integer.parseInt((String)request.getParameter("id"));
-        ColegiosBean Id=new ColegiosBean(id);
-        System.out.println("Id de By ID"+Id.getId_colegio());
-        List<ColegiosBean> listaById=record.mostrarColegiosById(Id);
+        Conexion conn = new Conexion();
+        RecorridosDao record = new RecorridosDao(conn);
+        int id = Integer.parseInt((String) request.getParameter("id"));
+        ColegiosBean Id = new ColegiosBean(id);
+        System.out.println("Id de By ID" + Id.getId_colegio());
+        List<ColegiosBean> listaById = record.mostrarColegiosById(Id);
         request.setAttribute("listById", listaById);
         RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
         rd.forward(request, response);
