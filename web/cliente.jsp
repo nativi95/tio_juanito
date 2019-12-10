@@ -11,13 +11,20 @@
     String Correo;
 
     if (sesion.getAttribute("usuario") != null) {
-       
-        usuario = sesion.getAttribute("usuario").toString();
+        
+        if (sesion.getAttribute("rol").toString().equals("cliente")) {
+            usuario = sesion.getAttribute("usuario").toString();
+        } else {
+            response.sendRedirect("admin.jsp");
+        }
     } else {
         if (sesion.getAttribute("Correo") != null) {
-            Correo = sesion.getAttribute("Correo").toString();
-            
-            
+
+            if (sesion.getAttribute("rol").toString().equals("cliente")) {
+                Correo = sesion.getAttribute("Correo").toString();
+            } else {
+                response.sendRedirect("admin.jsp");
+            }
         } else {
             response.sendRedirect("login.jsp");
         }
@@ -29,7 +36,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-   <body style="background-color: #424242">
+    <body style="background-color: #424242">
 
         <%@ include file="Menu_online.jsp"%>
 

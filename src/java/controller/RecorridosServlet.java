@@ -50,10 +50,10 @@ public class RecorridosServlet extends HttpServlet {
                 eliminarColegio(request, response);
                 break;
 
-//            case "actualizarColegios":
-//                System.out.println("llego aqui ");
-//                actualizarColegios(request, response);
-//                break;
+            case "actualizarColegios":
+                
+                actualizarColegio(request, response);
+                break;
 
         }
 
@@ -69,8 +69,8 @@ public class RecorridosServlet extends HttpServlet {
         String direcion = request.getParameter("direcion");
         Part part;
         part = request.getPart("fileFoto");
-        String prueba=request.getParameter("fileFoto");
-        System.out.println("prueba de la imagen "+prueba);
+        String prueba = request.getParameter("fileFoto");
+        System.out.println("prueba de la imagen " + prueba);
         InputStream inputStream;
         inputStream = part.getInputStream();
 
@@ -126,8 +126,6 @@ public class RecorridosServlet extends HttpServlet {
 
     }
 
-   
-
     protected void eliminarColegio(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -154,30 +152,45 @@ public class RecorridosServlet extends HttpServlet {
         Conexion conn = new Conexion();
         RecorridosDao recorridosd = new RecorridosDao(conn);
         int id = Integer.parseInt(request.getParameter("idU"));
+        
         ColegiosBean colegio = new ColegiosBean(id);
         String nombre = request.getParameter("nombreU");
 
         String direcion = request.getParameter("direcionU");
-        Part part;
-        part = request.getPart("fileFotoU");
-        InputStream inputStream;
-        inputStream = part.getInputStream();
+        String indicador = request.getParameter("indicador");
+       
+        if (indicador.equals("lleno")) {
+            Part part;
+            part = request.getPart("fileFotoU");
+            InputStream inputStream;
+            inputStream = part.getInputStream();
 
-        colegio.setNombre(nombre);
-        colegio.setDirecion(direcion);
-        colegio.setFoto(inputStream);
-
-        if (recorridosd.insertarColegio(colegio)) {
-
-            request.getRequestDispatcher("recorridos?action=mostrarColegios&rol=1").forward(request, response);
+            colegio.setNombre(nombre);
+            colegio.setDirecion(direcion);
+            colegio.setFoto(inputStream);
+            
+            System.out.println("lleno");
 
         } else {
-            String msg3 = "Formulario no enviado";
 
-            request.setAttribute("msg3", msg3);
-            RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
-            rd.forward(request, response);
+            System.out.println("vacio");
+
+            colegio.setNombre(nombre);
+            colegio.setDirecion(direcion);
+            
         }
+
+//        if (recorridosd.insertarColegio(colegio)) {
+//
+//            request.getRequestDispatcher("recorridos?action=mostrarColegios&rol=1").forward(request, response);
+//
+//        } else {
+//            String msg3 = "Formulario no enviado";
+//
+//            request.setAttribute("msg3", msg3);
+//            RequestDispatcher rd = request.getRequestDispatcher("mostrar_agregar_colegios.jsp");
+//            rd.forward(request, response);
+//        }
     }
 
     protected void mostrarColegiosById(HttpServletRequest request, HttpServletResponse response)

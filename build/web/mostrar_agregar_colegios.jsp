@@ -7,10 +7,20 @@
     String Correo;
 
     if (sesion.getAttribute("usuario") != null) {
-        usuario = sesion.getAttribute("usuario").toString();
+
+        if (sesion.getAttribute("rol").toString().equals("admin")) {
+            usuario = sesion.getAttribute("usuario").toString();
+        } else {
+            response.sendRedirect("cliente.jsp");
+        }
     } else {
         if (sesion.getAttribute("Correo") != null) {
-            Correo = sesion.getAttribute("Correo").toString();
+
+            if (sesion.getAttribute("rol").toString().equals("admin")) {
+                Correo = sesion.getAttribute("Correo").toString();
+            } else {
+                response.sendRedirect("cliente.jsp");
+            }
         } else {
             response.sendRedirect("login.jsp");
         }
@@ -113,24 +123,24 @@
                             <div class="modal-header">
 
 
-                                <form method="POST" action="recorridos?action=actualizarColegio"enctype="multipart/form-data">  
+                                <form method="POST" id="actualizarF" action="recorridos?action=actualizarColegios" enctype="multipart/form-data">  
                                     <h5 class="modal-title" id="exampleModalLabel">Actualizar registro de colegio</h5>
 
                                     <label style="display: block;">Nombre</label>
-                                    <label hidden="true" id="IdM"></label>
+                                    <input hidden="true" id="IdM" name="idU"/>
                                     <input style="display: block;" id="nombreM"  name="nombreU">
 
                                     <label style="display: block;" >Direción</label>
                                     <input style="display: block;" id="direcionM" name="direcionU">
 
                                     <label style="display: block;">foto</label>
-                                    <input style="display: block;" type="file" name="fileFotoU">
-                                    <label id="vacio">vacio</label>
+                                    <input style="display: block; margin-bottom: 10px;" type="file" id="fileFotoM" name="fileFotoU">
+                                    <input  id="indicador" name="indicador">
 
-                                    <input type="submit" value="Enviar"/>
+                                    <input type="submit" id="Aceptar" value="Enviar"/>
                                 </form>
                                 <label style="color:red;">
-                                    ${msg3}
+
                                 </label>
 
                             </div>
@@ -147,20 +157,25 @@
                     <script type="text/javascript">
 
                                 function ById(id, nombre, direccion) {
-                                    document.getElementById("IdM").text = id;
+                                    console.log(id);
+                                    document.getElementById("IdM").value = id;
                                     document.getElementById("nombreM").value = nombre;
                                     document.getElementById("direcionM").value = direccion;
                                 }
+                                $(document).ready(function () {
+                                    $("#actualizarF").on("submit", function () {
+                                        $("#Aceptar").click(function () {
+                                            var imgVal = $("#fileFotoM")[0].files.length;
+                                            if (imgVal === 0) {
+                                                alert("No file selected.");
+                                                $("#indicador").val("vacio");
 
-                                $("#fileFotoU").change(function () {
-                                    
-                                    if($('#fileFotoU').get(0).files.length === 0){
-                                        
-                                      $("vacio").text("lleno"); 
-                                      
-                                    }else{$("vacio").text("lleno"); }
-                                    
-                                    
+                                            } else {
+                                                $("#indicador").val("lleno");
+                                            }
+                                            return false;
+                                        });
+                                    });
                                 });
 
                     </script>

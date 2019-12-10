@@ -11,13 +11,20 @@
     String Correo;
 
     if (sesion.getAttribute("usuario") != null) {
-       
-        usuario = sesion.getAttribute("usuario").toString();
+        
+        if (sesion.getAttribute("rol").toString().equals("cliente")) {
+            usuario = sesion.getAttribute("usuario").toString();
+        } else {
+            response.sendRedirect("admin.jsp");
+        }
     } else {
         if (sesion.getAttribute("Correo") != null) {
-            Correo = sesion.getAttribute("Correo").toString();
-            
-            
+
+            if (sesion.getAttribute("rol").toString().equals("cliente")) {
+                Correo = sesion.getAttribute("Correo").toString();
+            } else {
+                response.sendRedirect("admin.jsp");
+            }
         } else {
             response.sendRedirect("login.jsp");
         }

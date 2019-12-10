@@ -74,10 +74,12 @@ public class LoginServlet extends HttpServlet {
                 if (login.consultarRol_usuario(usuario).getRol()) {
                     session = request.getSession();
                     session.setAttribute("usuario", usuario.getUsuario());
+                    session.setAttribute("rol", "admin");
                     response.sendRedirect("admin.jsp");
                 } else {
                     session = request.getSession();
                     session.setAttribute("usuario", usuario.getUsuario());
+                    session.setAttribute("rol", "cliente");
                     response.sendRedirect("cliente.jsp");
                 }
             } else {
@@ -93,10 +95,12 @@ public class LoginServlet extends HttpServlet {
                     if (login.consultarRol_Correo(usuario).getRol()) {
                         session = request.getSession();
                         session.setAttribute("Correo", usuario.getCorreo());
+                        session.setAttribute("rol", "admin");
                         response.sendRedirect("admin.jsp");
                     } else {
                         session = request.getSession();
                         session.setAttribute("Correo", usuario.getCorreo());
+                        session.setAttribute("rol", "cliente");
                         response.sendRedirect("cliente.jsp");
                     }
                 } else {
